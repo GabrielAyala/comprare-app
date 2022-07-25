@@ -19,6 +19,13 @@ export default StyleSheet.create({
         fontSize: 15,
         color: '#737380'
     },
+
+    description: {
+        fontSize: 16,
+        lineHeight: 24,
+        color: '#737380'
+    },
+
     price: {
         padding: 24,
         borderRadius: 8,
@@ -38,5 +45,17 @@ export default StyleSheet.create({
         fontSize: 15,
         marginBottom: 24,
         color: '#737380'
+    },
+
+    listPrices: {
+        marginTop: 32,
+    },
+
+    title: {
+        fontSize: 30,
+        marginBottom: 16,
+        marginTop: 48,
+        color: '#737380',
+        fontWeight: 'bold'
     }
 });

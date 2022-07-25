@@ -10,16 +10,28 @@ import api from '../../services/comprare-api';
 function Markets() {
 
     const [markets, setMarkets] = useState([]);
+    const [total, setTotal] = useState(0);
+
     const navigation = useNavigation();
 
-    function navigateToPrices() {
-        navigation.navigate('Prices');
+    function navigateToPrices(id, prices) {
+        navigation.navigate('Prices', { id, prices });
     }
 
     async function loadMarkets() {
-        const response = await api.get('api/proconInfos');
 
-        setMarkets(response.data);
+        try {
+            const response = await api.get("/api/proconInfos");
+
+            setMarkets(response.data);
+
+            let total = (response.data).length;
+
+            setTotal(total);
+
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     useEffect(() => {
@@ -29,49 +41,46 @@ function Markets() {
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <Text style={styles.headerText}>
-                    Lista de mercados que constam no Procon
+                <Text style={styles.title}>
+                    Comprare
                 </Text>
             </View>
-            <Text style={styles.title}>
-                Comprare
-            </Text>
-            <Text style={styles.description}>
-                Escolha um dos mercados listados
+            <Text style={styles.headerText}>
+                Total de {total} mercados listados
             </Text>
 
             <FlatList
                 data={markets}
                 style={styles.listMarkets}
-                keyExtractor={incident => String(incident.id)}
+                keyExtractor={markets => String(markets.id)}
                 showsVerticalScrollIndicator={false}
-                renderItem={({ item: incident }) => (
+                renderItem={({ item }) => (
                     <View style={styles.market}>
 
                         <Text style={styles.marketProperty}>
                             Estabelecimento:
                         </Text>
                         <Text style={styles.marketValue}>
-                            {incident.Estabelecimentos}
+                            {item.Estabelecimentos}
                         </Text>
 
                         <Text style={styles.marketProperty}>
                             Arroz 1kg:
                         </Text>
                         <Text style={styles.marketValue}>
-                            R$ 3,49
+                            {item.Arroz1kg}
                         </Text>
 
                         <Text style={styles.marketProperty}>
-                            Banana Branca1kg:
+                            Açucar Refinado 1kg:
                         </Text>
                         <Text style={styles.marketValue}>
-                            5,95
+                            {item.AçucarRefinado1kg}
                         </Text>
 
                         <TouchableOpacity
                             style={styles.detailsButton}
-                            onPress={navigateToPrices}>
+                            onPress={() => navigateToPrices(item.id, markets)}>
                             <Text style={styles.detailsButtonText}>
                                 Ver Preços em detalhe
                             </Text>
