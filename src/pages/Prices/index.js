@@ -90,7 +90,7 @@ function Prices() {
                         Carne (coxãomole) 1kg:
                     </Text>
                     <Text style={styles.priceValue}>
-                        Teste
+                        {details.Carne}
                     </Text>
 
                     <Text style={styles.priceProperty}>
